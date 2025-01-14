@@ -45,9 +45,11 @@ def validate_session_history(session_history: dict):
         raise ValueError("Session history should have keys: name, sessionID, conversation_history and patient_answer. But get: {}".format(session_history))
     # Check if the conversation history is a list of dicts, and the dicts should have keys: role and utterance
     conversation_history = session_history["conversation_history"]
-    # Check the format of the conversation history
-    if not conversation_history:
-        raise ValueError("Conversation history is empty.")
+    
+    # # Check the format of the conversation history
+    # if not conversation_history:
+    #     raise ValueError("Conversation history is empty.")
+
     if not isinstance(conversation_history, list):
         raise TypeError(
             "Conversation history should be a list. But get: {}".format(

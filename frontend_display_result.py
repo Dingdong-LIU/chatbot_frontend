@@ -59,14 +59,16 @@ if __name__ == "__main__":
         #     question, answer = item["Question"], item["Patient Answer"]
         #     st.slider(label=question, min_value=0, max_value=5, value=answer, disabled=True)
     
-        st.write("### Details")
-        [history_tab] = st.tabs(["Conversation History"])
-        with history_tab:
-            st.write("#### Conversation History")
-            with st.container(height=400):
-                parsed_conversation_history = parse_copd_history(conversation_history)
-                for role, utterance in parsed_conversation_history:
-                    with st.chat_message(role):
-                        st.write(utterance)
+        # st.write("### Details")
+        # [history_tab] = st.tabs(["Conversation History"])
+
+        # with history_tab:
+        #     st.write("#### Conversation History")
+        #     with st.container(height=400):
+        #         parsed_conversation_history = parse_copd_history(conversation_history)
+        #         for role, utterance in parsed_conversation_history:
+        #             with st.chat_message(role):
+        #                 st.write(utterance)
+
     except:
         pass
