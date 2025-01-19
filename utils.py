@@ -98,9 +98,16 @@ def parse_patient_answer(patient_answer: list):
     # Parse the patient answer into a list of dicts, with key "Question" and "Patient Answer"
     parsed_patient_answer = []
     for i, item in enumerate(patient_answer):
-        question_id, real_question, answer = item["question_id"], item["question"], item["answer"]
+        question_id, real_question, answer, reference = item["question_id"], item["question"], item["answer"], item.get("reference", "")
         question = COPD_QUESTIONNAIRE[question_id]
-        parsed_patient_answer.append({"Question": question, "Patient Answer": answer, "Index": i+1})
+        parsed_patient_answer.append(
+            {
+                "Question": question,
+                "Patient Answer": answer,
+                "Index": i + 1,
+                "Notes": reference,
+            },
+        )
 
     # Convert the answer to pd.DataFrame with "Index" as the dataframe index
     df = pd.DataFrame(parsed_patient_answer)
