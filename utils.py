@@ -43,41 +43,43 @@ def validate_session_history(session_history: dict):
     # Check if the session history contains the necessary keys: name, sessionID, conversation_history and patient_answer
     if not all(key in session_history for key in ["name", "sessionID", "conversation_history", "patient_answer"]):
         raise ValueError("Session history should have keys: name, sessionID, conversation_history and patient_answer. But get: {}".format(session_history))
+    session_id = session_history["sessionID"]
     # Check if the conversation history is a list of dicts, and the dicts should have keys: role and utterance
     conversation_history = session_history["conversation_history"]
     # Check the format of the conversation history
     if not conversation_history:
-        raise ValueError("Conversation history is empty.")
+        # raise ValueError("Conversation history is empty.")
+        print("[ID:%s] Session history is empty. Disable the validation." % session_id)
     if not isinstance(conversation_history, list):
         raise TypeError(
-            "Conversation history should be a list. But get: {}".format(
-                conversation_history
+            "[ID:{}] Conversation history should be a list. But get: {}".format(
+                session_id, conversation_history
             )
         )
     if not all(isinstance(turn, dict) for turn in conversation_history):
         raise TypeError(
-            "Each turn in conversation history should be a dictionary. But get: {}".format(
-                conversation_history
+            "[ID:{}] Each turn in conversation history should be a dictionary. But get: {}".format(
+                session_id, conversation_history
             )
         )
     if not all("role" in turn and "utterance" in turn for turn in conversation_history):
         raise ValueError(
-            "Each turn in conversation history should have 'role' and 'utterance' keys. But get: {}".format(
-                conversation_history
+            "[ID:{}] Each turn in conversation history should have 'role' and 'utterance' keys. But get: {}".format(
+                session_id, conversation_history
             )
         )
     # Check if the role is either "Patient" or "Grace"
     if not all(turn["role"] in ["Patient", "Grace"] for turn in conversation_history):
         raise ValueError(
-            "The role in conversation history should be either 'Patient' or 'Grace'. But get: {}".format(
-                conversation_history
+            "[ID:{}] The role in conversation history should be either 'Patient' or 'Grace'. But get: {}".format(
+                session_id, conversation_history
             )
         )
     # Check if the name is "COPD"
     if session_history["name"] != "COPD":
         raise ValueError(
-            "The name in session history should be 'COPD'. But get: {}".format(
-                session_history["name"]
+            "[ID:{}] The name in session history should be 'COPD'. But get: {}".format(
+                session_id, session_history["name"]
             )
         )
     
