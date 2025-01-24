@@ -39,6 +39,16 @@ if __name__ == "__main__":
         NGROK_DOMAIN = domain
 
     response = requests.post(f"{NGROK_DOMAIN}/get_copd_result", json={"session_id": session_id})
+    
+    # If the response is not successful, print the error message
+    if response.status_code != 200:
+        st.warning(
+            f"The Interview with Session ID {session_id} hasn't started yet, please wait. \n\nIf you have already started the interview, please ensure the Session ID and domain name is correct."
+        )
+        # st.warning(f"")
+        # st.warning("If you believe this is an error, please contact the administrator with the following information")
+        
+        st.stop()
     response = response.json()
     response_data = response.get("responses", {})
     # with open("exp_data/sample/1.json", "r") as f:
